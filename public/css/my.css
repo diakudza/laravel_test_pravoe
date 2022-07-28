@@ -1,0 +1,21 @@
+.mydropform {
+    left: unset!important;
+    width: 400px;
+    right:0;
+    top: 56px;
+}
+.mydropformmenu {
+    left: unset!important;
+    width: 200px;
+    right:0;
+    top: 56px;
+}
+.mainborder {
+    border-left: solid #0000000f 1px;
+    border-right: solid #0000000f 1px;
+}
+.footerborder {
+    border-left: solid #0000000f 1px;
+    border-right: solid #0000000f 1px;
+    border-right: solid #0000000f 1px;
+}
