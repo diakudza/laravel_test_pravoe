@@ -23,7 +23,7 @@ class MainController extends Controller
         $lastComment = $comment->select('id', 'text', 'user_id')
             ->with('user')->orderByDesc('id')->limit('2')->get();
         return Inertia::render('Public/Main', [
-            'title' => 'Главная страница',
+            'title' => 'Home page',
             'lastComments'=> $lastComment,
             'randPost' => $randPosts,
 

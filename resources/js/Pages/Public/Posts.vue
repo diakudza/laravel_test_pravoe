@@ -3,23 +3,35 @@
         <h1>{{ title }}</h1>
         <hr>
         <div class="d-flex flex-row justify-content-sm-between">
-            <div>
-                <select @change="sortByDate" id="jsSortByDate">
+            <div class="d-flex flex-row">
+
+                <select id="jsSortByDate" class="form-select">
+                    <option value="" disabled selected>
+                        select date
+                    </option>
                     <option v-for="item in date" v-bind:value="item.created_at"
-                            :selected="item.created_at == selectedDate">
+                            :selected="item.created_at === this.selectedDate"
+                    >
                         {{ item.created_at }}
                     </option>
                 </select>
-                <select @change="sortByCategory" id="jsSortByCategory">
+
+                <select id="jsSortByCategory" class="form-select">
+                    <option value="" disabled selected>
+                        select category
+                    </option>
                     <option v-for="category in categories" v-bind:value="category.id"
-                            :selected="category.id == selected">
+                            :selected="category.id == selectedCategory">
                         {{ category.description }}
                     </option>
                 </select>
+
             </div>
-            <div>
-                <input id="jsFind" type="text" placeholder="строка поиска">
-                <button @click="find">Искать</button>
+            <div class="d-flex flex-row">
+                <input id="jsFind" type="text" class="form-control" placeholder="search input"
+                       v-model="searchQuery">
+                <button @click="sendSearchRequest" class="btn btn-success">Search</button>
+                <button @click="resetSearchfilter" class="btn btn-danger">Reset</button>
             </div>
         </div>
         <hr>
@@ -51,9 +63,10 @@ export default {
         'posts',
         'title',
         'categories',
-        'selected',
+        'selectedCategory',
         'date',
-        'selectedDate'
+        'selectedDate',
+        'searchQuery'
     ],
     data() {
         return {
@@ -61,18 +74,21 @@ export default {
         }
     },
     methods: {
-        find() {
-            let query = document.getElementById('jsFind').value
-            this.$inertia.get('/Post?searchQuery=' + query)
+
+        resetSearchfilter() {
+                     this.$inertia.get('/Post')
         },
-        sortByCategory() {
-            let query = document.getElementById('jsSortByCategory').value
-            this.$inertia.get('/Post?sortByCategory=' + query)
-        },
-        sortByDate() {
-            let query = document.getElementById('jsSortByDate').value
-            this.$inertia.get('/Post?sortByDate=' + query)
+        sendSearchRequest() {
+
+            let query = '';
+            query += 'sortByCategory=' + document.getElementById('jsSortByCategory').value + '&';
+            query += 'sortByDate=' + document.getElementById('jsSortByDate').value + '&';
+            if( this.searchQuery != '') {
+                query += 'searchQuery=' + document.getElementById('jsFind').value
+            }
+            this.$inertia.get('/Post?' + query)
         }
+
     }
 
 }

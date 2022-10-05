@@ -2,14 +2,15 @@
     <div>
         <h1>{{ title }}</h1>
         <h2>{{ post.title }}</h2>
-        <p>Пост номер: {{ post.id }}</p>
-        <p>Автор: {{  post.author.name }}</p>
-        <p>Дата создания: {{ post.created_at }}</p>
+        <p>PostID: {{ post.id }}</p>
+        <p>Category: {{  post.author.name }}</p>
+        <p>Author: {{  post.author.name }}</p>
+        <p>Created at: {{ post.created_at }}</p>
         <p>{{ post.text }}</p>
         <hr>
         <CommentForm v-if='$attrs.auth.user.loggedIn' :user="$attrs.auth.user.profile.id" :post_id="post.id"/>
         <div v-if="post.comments.length != 0">
-            <p>Комментарии</p>
+            <p>Comments</p>
             <div v-for="comment in post.comments">
                 <div>
                     <div>автор: {{ comment.user.name }}</div>

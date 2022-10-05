@@ -4,20 +4,20 @@
             <div class="container">
                 <div class="d-flex justify-content-sm-start">
                     <Link :href="route('home')" class="navbar-brand d-flex align-items-center">
-                        <strong>Главная</strong>
+                        <strong>Home</strong>
                     </Link>
                     <Link :href="route('Post.index')" class="navbar-brand d-flex align-items-center">
-                        <strong>Посты</strong>
+                        <strong>Posts</strong>
                     </Link>
 
                     <Link :href="route('Post.create')" v-if="user.loggedIn" class="navbar-brand d-flex align-items-center">
-                        <strong>Создать Пост</strong>
+                        <strong>New Post</strong>
                     </Link>
                 </div>
                 <div class="d-flex flex-row">
                     <div v-if="!user.loggedIn" class="d-flex flex-row ">
-                        <Link :href="route('registrationform')" class="btn navbar-brand d-flex align-items-center">Регистрация</Link>
-                        <button  @click="changeFormVisible" class="btn navbar-brand d-flex align-items-center">Войти
+                        <Link :href="route('registrationform')" class="btn navbar-brand d-flex align-items-center">SingUp</Link>
+                        <button  @click="changeFormVisible" class="btn navbar-brand d-flex align-items-center">SingIn
                         </button>
                         <form :class="{'show':formVisible}" class="mydropform dropdown-menu p-4 "  @submit.prevent="submit">
 
@@ -32,7 +32,7 @@
                                        name="password"
                                        placeholder="Password">
                             </div>
-                            <button type="submit" class="btn btn-primary mt-2">Войти</button>
+                            <button type="submit" class="btn btn-primary mt-2">SingIn</button>
                         </form>
                     </div>
                     <div v-if="user.loggedIn">
@@ -42,7 +42,7 @@
                         </button>
                         <form :class="{'show':formVisible}" class="mydropformmenu dropdown-menu p-4 "  @submit.prevent="submit">
                             <div class="mb-3">
-                                <Link :href="route('logout')" class="d-flex align-items-center">Выйти</Link>
+                                <Link :href="route('logout')" class="d-flex align-items-center">SingOut</Link>
                             </div>
                         </form>
                     </div>

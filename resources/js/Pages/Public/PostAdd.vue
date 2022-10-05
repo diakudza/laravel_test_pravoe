@@ -1,17 +1,22 @@
 <template>
-    <form class="d-flex flex-column"
+    <form class="d-flex flex-column form"
           id="form"
           @submit.prevent="submit">
-        <input type="text" placeholder="заголовок" v-model="title" name="title">
-        <input type="text" placeholder="text" v-model="text" name="text">
-
-        <select name="category_id" v-model="category_id">
-            <option v-for="category in categories" v-bind:value="category.id"
-            >
-                {{ category.description }}
-            </option>
-        </select>
-        <button type="submit" id="jsSend">Опубликовать</button>
+        <label class="form-label">
+            <input type="text" placeholder="заголовок" v-model="title" name="title" class="form-control">
+        </label>
+        <label class="form-label">
+            <input type="text" placeholder="text" id="text" v-model="text" name="text" class="form-control">
+        </label>
+        <label class="form-label">
+            <select name="category_id" v-model="category_id" class="form-select">
+                <option v-for="category in categories" v-bind:value="category.id"
+                >
+                    {{ category.description }}
+                </option>
+            </select>
+        </label>
+        <button type="submit" id="jsSend" class="btn btn-success">Опубликовать</button>
     </form>
 </template>
 

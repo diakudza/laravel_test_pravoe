@@ -1,6 +1,6 @@
 <template>
        <div class="m-2">
-            Прокоментируйте
+            Let's comment
             <form id="form" @submit.prevent="form.post(route('Comment.store'))"
                   class="form-control d-flex flex-column">
                 <input type="text" class="form-control" v-model="form.text" name="text">

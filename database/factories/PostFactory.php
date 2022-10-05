@@ -22,7 +22,7 @@ class PostFactory extends Factory
             'text' => $this->faker->unique()->realText('300'),
             'user_id'=> $this->faker->numberBetween('1','10'),
             'category_id'=> $this->faker->numberBetween('1','6'),
-            'created_at' => now(),
+            'created_at' => $this->faker->dateTimeBetween('-20 days', now()),
         ];
     }
 }

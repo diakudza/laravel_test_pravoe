@@ -22,8 +22,8 @@
                     <label for="password" class="form-label">Password confirm</label>
                     <input type="password" class="form-control" id="password_confirmation" v-model="form.password_confirmation" name="password_confirmation" placeholder="Password">
                 </div>
-                <p>Уже есть акаунт? <a href="{{ route('login') }}">SingIn</a></p>
-                <button type="submit" class="w-100 btn btn-primary btn-lg">Регистрация</button>
+                <p>Already has account? <a href="{{ route('login') }}">SingIn</a></p>
+                <button type="submit" class="w-100 btn btn-primary btn-lg">SingUp</button>
             </div>
         </form>
     </div>

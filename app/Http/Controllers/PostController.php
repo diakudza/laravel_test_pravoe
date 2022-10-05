@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\PostsHelper;
+use App\Http\Helpers\SortPostsHelper;
 use App\Http\Requests\PostStoreRequest;
 use App\Models\Category;
 use App\Models\Post;
@@ -20,30 +21,31 @@ class PostController extends Controller
      */
     public function index(Post $post, Category $category, Request $request)
     {
+        list($selectCategory, $selectDate, $query) = NULL;
+
         if ($request->input('searchQuery')) {
             $query = $request->input('searchQuery');
-            $posts = $post->where('title', 'like', $query . "%")->paginate(3);
-        } elseif ($request->input('sortByCategory')) {
-            $query = $request->input('sortByCategory');
-            $selectedCategory = $query;
-            $posts = $post->where('category_id', $query)->paginate(15);
-        } elseif ($request->input('sortByDate')) {
-            $query = $request->input('sortByDate');
-            $selectedDate = $query;
-            $posts = DB::table('posts')->select('*')
-                ->where(DB::raw('CAST(created_at AS CHAR)'), 'like', "%$query%")
-                ->paginate(15);
-        } else {
-            $posts = Post::orderBy('created_at', 'DESC')->paginate(15);
+            $searchQuery = $query;
         }
+        if ($request->input('sortByCategory')) {
+            $selectCategory = $request->input('sortByCategory');
+            $selectedCategory = $selectCategory;
+        }
+        if ($request->input('sortByDate')) {
+            $selectDate = $request->input('sortByDate');
+            $selectedDate = $selectDate;
+        }
+
+        $posts = SortPostsHelper::sort($post, $selectCategory, $selectDate, $query);
 
         return Inertia::render('Public/Posts', [
             'posts' => $posts,
             'categories' => $category->all(),
             'date' => Post::select('created_at')->distinct()->get(),
-            'title' => 'Страница новостей',
-            'selected' => $selectedCategory ?? 0,
+            'title' => 'News page',
+            'selectedCategory' => $selectedCategory ?? 0,
             'selectedDate' => $selectedDate ?? 0,
+            'searchQuery' => $searchQuery ?? ''
         ]);
     }
 
@@ -55,7 +57,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
         return Inertia::render('Public/PostAdd', [
-            'title' => 'Страница создания новости',
+            'title' => 'New post page',
             'categories' => Category::all(),
         ]);
     }
@@ -70,7 +72,7 @@ class PostController extends Controller
     {
         $post->fill($request->validated());
         $post->save();
-        return redirect()->to(route('Post.index'))->with('success',  "Пост добавлен!");
+        return redirect()->to(route('Post.index'))->with('success', "Пост добавлен!");
     }
 
     /**
@@ -83,7 +85,7 @@ class PostController extends Controller
     {
         return Inertia::render('Public/Post', [
             'post' => $post->where('id', $id)->with(['comments', 'author', 'comments.user'])->first(),
-            'title' => 'Страница новости'
+            'title' => 'News page'
         ]);
     }
 

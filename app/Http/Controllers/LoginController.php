@@ -21,7 +21,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->home()->with(['success'=> 'You are logout!']);;
+        return redirect()->home()->with(['success' => 'You are logout!']);;
     }
 
     public function login(Request $request)
@@ -37,16 +37,17 @@ class LoginController extends Controller
             'password' => $request->password
         ])) {
 
-            return redirect()->home()->with(['success'=> 'Hello!']);
+            return redirect()->home()->with(['success' => 'Hello!']);
         }
         return redirect()->to(route('registrationform'));
     }
 
-    public function registrationForm ()
+    public function registrationForm()
     {
         return Inertia::render('Public/Singup', ['title' => 'Регистрация']);
     }
-    public function registration (RegistrationRequest $request)
+
+    public function registration(RegistrationRequest $request)
     {
 
         $vaidated = $request->validated();
@@ -63,7 +64,7 @@ class LoginController extends Controller
             'avatar' => $vaidated['avatar'] ?? ''
         ]);
         Auth::login($user);
-        return redirect()->home()->with('success',  "User $request->name was register!");
+        return redirect()->home()->with('success', "User $request->name was register!");
     }
 
 }
